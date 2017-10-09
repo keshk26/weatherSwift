@@ -15,14 +15,11 @@ class Forecast: NSObject, CLLocationManagerDelegate {
     
     func getTemperateForLocation(_ newLocation: CLLocation, completion: @escaping ([String:Any])->Void) {
         
-        var locationData = [String:Any]()
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(newLocation) { [unowned self] (placemarks, error) in
             guard let placemark = placemarks?.first else {
                 return
             }
-            
-            locationData["city"] = placemark.locality
             
             let forcastURL = URL(string: "https://api.darksky.net/forecast/\(kAPI_KEY)/\(newLocation.coordinate.latitude),\(newLocation.coordinate.longitude)")
             let request = URLRequest(url: forcastURL!)
@@ -31,7 +28,9 @@ class Forecast: NSObject, CLLocationManagerDelegate {
                 
                     guard let data = data else { return }
                     let parsedData = JSON(data: data)
-                    completion(self.processTempData(jsonDict: parsedData))
+                    var tempData = self.processTempData(jsonDict: parsedData)
+                    tempData["city"] = placemark.locality
+                    completion(tempData)
             })
             task.resume()
         }

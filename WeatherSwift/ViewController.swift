@@ -61,17 +61,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         Forecast.sharedInstance.getTemperateForLocation(location) { [unowned self] (tempDict) in
             DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
+                self.title = tempDict["city"] as? String
                 self.tempLabel?.text = tempDict["temp"] as? String
                 self.summaryLabel?.text = tempDict["summary"] as? String
                 if let sevenData = tempDict["sevenDays"] as? [[String:String]] {
                     self.sevenDayData = sevenData
-                    print(self.sevenDayData[0])
                 }
 
                 self.sevenDayTable.isHidden = false
                 self.sevenDayTable.reloadData()
             }
         }
+    }
+    
+    @IBAction func showSavedCities() {
+        let addCityVC:AddCityViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddCityViewController") as! AddCityViewController
+
+        self.present(addCityVC, animated: true, completion: nil)
     }
 }
 
@@ -106,6 +112,7 @@ extension ViewController {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationManager?.stopUpdatingLocation()
         locationManager?.delegate = nil
+        print(locations[0])
         getCurrentTemperature(location: locations[0])
     }
 }
