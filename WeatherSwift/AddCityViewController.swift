@@ -27,18 +27,6 @@ class AddCityViewController: UIViewController {
     
     @IBAction func addCity(_ sender: UIButton) {
         
-        guard let city = cityTextField.text else { return }
-        let geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(city) { (placemarks, error) in
-            print(error)
-            print(placemarks)
-            if let _ = error {
-                let alert = UIAlertController(title: "Error", message: "Unable to find this location", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alert.addAction(okAction)
-                self.present(alert, animated: true, completion: nil)
-            }
-        }
     }
     
     

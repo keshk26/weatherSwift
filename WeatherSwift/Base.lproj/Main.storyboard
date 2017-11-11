@@ -140,56 +140,35 @@
                                     <navigationItem title="Add Cities" id="Pbr-UQ-XnR"/>
                                 </items>
                             </navigationBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nda-C7-wqf">
-                                <rect key="frame" x="0.0" y="186" width="375" height="481"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CityCell" id="ohs-bf-En6">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ohs-bf-En6" id="PT8-d9-hiV">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xua-oq-yVr">
-                                <rect key="frame" x="47" y="94" width="260" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NY4-xz-QLc">
-                                <rect key="frame" x="322" y="94" width="30" height="30"/>
-                                <state key="normal" title="Add"/>
-                                <connections>
-                                    <action selector="addCity:" destination="p9j-Jj-Vvd" eventType="touchUpInside" id="Ske-Ky-v8I"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="eC3-CO-nXg" firstAttribute="top" secondItem="rVb-Em-z6F" secondAttribute="bottom" id="0b5-N7-EJk"/>
-                            <constraint firstItem="xua-oq-yVr" firstAttribute="leading" secondItem="BdS-LI-NP8" secondAttribute="leadingMargin" constant="31" id="0m7-PB-UgS"/>
-                            <constraint firstItem="xua-oq-yVr" firstAttribute="top" secondItem="eC3-CO-nXg" secondAttribute="bottom" constant="30" id="9nb-vF-50D"/>
-                            <constraint firstAttribute="trailing" secondItem="nda-C7-wqf" secondAttribute="trailing" id="GZG-KY-l3T"/>
                             <constraint firstAttribute="trailing" secondItem="eC3-CO-nXg" secondAttribute="trailing" id="KRK-WA-1qg"/>
-                            <constraint firstItem="nda-C7-wqf" firstAttribute="leading" secondItem="BdS-LI-NP8" secondAttribute="leading" id="LR3-RD-Tsz"/>
-                            <constraint firstItem="NY4-xz-QLc" firstAttribute="leading" secondItem="xua-oq-yVr" secondAttribute="trailing" constant="15" id="LvE-pJ-1dG"/>
                             <constraint firstItem="eC3-CO-nXg" firstAttribute="leading" secondItem="BdS-LI-NP8" secondAttribute="leading" id="Ofs-DZ-aYu"/>
-                            <constraint firstItem="NY4-xz-QLc" firstAttribute="top" secondItem="eC3-CO-nXg" secondAttribute="bottom" constant="30" id="Zqq-sq-TZZ"/>
-                            <constraint firstItem="r9h-wd-KLd" firstAttribute="top" secondItem="nda-C7-wqf" secondAttribute="bottom" id="eaZ-U5-orw"/>
-                            <constraint firstItem="nda-C7-wqf" firstAttribute="top" secondItem="xua-oq-yVr" secondAttribute="bottom" constant="62" id="iwM-lZ-wqh"/>
-                            <constraint firstItem="nda-C7-wqf" firstAttribute="top" secondItem="NY4-xz-QLc" secondAttribute="bottom" constant="62" id="s12-j4-Qsv"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="NY4-xz-QLc" secondAttribute="trailing" constant="7" id="wme-oJ-eRs"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="cityTextField" destination="xua-oq-yVr" id="o0M-Fc-uiu"/>
+                        <outlet property="searchDisplayController" destination="KTg-ch-qgP" id="hhh-vF-gLv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kxk-cb-bGc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="yi2-2m-rS0">
+                    <connections>
+                        <outlet property="delegate" destination="p9j-Jj-Vvd" id="ob4-U3-YqT"/>
+                        <outlet property="searchContentsController" destination="p9j-Jj-Vvd" id="fgk-vF-KCR"/>
+                        <outlet property="searchResultsDataSource" destination="p9j-Jj-Vvd" id="X58-Wi-bNd"/>
+                        <outlet property="searchResultsDelegate" destination="p9j-Jj-Vvd" id="453-i9-Bi1"/>
+                    </connections>
+                </searchDisplayController>
+                <searchDisplayController id="KTg-ch-qgP">
+                    <connections>
+                        <outlet property="delegate" destination="p9j-Jj-Vvd" id="kwb-tZ-NDb"/>
+                        <outlet property="searchContentsController" destination="p9j-Jj-Vvd" id="ujy-EY-AId"/>
+                        <outlet property="searchResultsDataSource" destination="p9j-Jj-Vvd" id="zYj-wP-k8D"/>
+                        <outlet property="searchResultsDelegate" destination="p9j-Jj-Vvd" id="L2M-f6-Tqy"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1789.5999999999999" y="137.18140929535232"/>
         </scene>

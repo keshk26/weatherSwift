@@ -40,6 +40,7 @@ class Forecast: NSObject, CLLocationManagerDelegate {
         
         var tempData = [String: Any]()
         // Current temp
+
         let currentDict = jsonDict["currently"]
         if let currentTemp = currentDict["apparentTemperature"].double {
             tempData["temp"] = String(format: "%.0f°F", currentTemp)
@@ -61,12 +62,9 @@ class Forecast: NSObject, CLLocationManagerDelegate {
 
         for forecastDict in sevenDayData {
             
-            let date = NSDate.init(timeIntervalSinceReferenceDate: TimeInterval(forecastDict["time"].intValue))
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "EEEE"
-            
+
             var dict = [String: Any]()
-            dict["weekday"] = dateFormatter.string(from: date as Date)
+            dict["weekday"] = weekDayFormat(time: forecastDict["time"].doubleValue)
             dict["minTemp"] = String(format: "%.0f°", forecastDict["apparentTemperatureMin"].doubleValue)
             dict["maxTemp"] = String(format: "%.0f°", forecastDict["apparentTemperatureMax"].doubleValue)
             sevenDay.append(dict)
@@ -74,6 +72,15 @@ class Forecast: NSObject, CLLocationManagerDelegate {
         
         tempData["sevenDays"] = sevenDay
         return tempData
+    }
+}
+
+extension Forecast {
+    func weekDayFormat(time: Double) -> String {
+        let date = Date(timeIntervalSince1970: TimeInterval(time))
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        return dateFormatter.string(from: date as Date)
     }
 }
 
