@@ -61,8 +61,6 @@ class Forecast: NSObject, CLLocationManagerDelegate {
         var sevenDay = [[String:Any]]()
 
         for forecastDict in sevenDayData {
-            
-
             var dict = [String: Any]()
             dict["weekday"] = weekDayFormat(time: forecastDict["time"].doubleValue)
             dict["minTemp"] = String(format: "%.0f°", forecastDict["apparentTemperatureMin"].doubleValue)
