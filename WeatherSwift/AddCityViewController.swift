@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import GooglePlaces
+import CoreData
 
 
 class AddCityViewController: UIViewController {
@@ -23,26 +24,28 @@ class AddCityViewController: UIViewController {
     }
     //@IBOutlet var cityTextField: UITextField!
     
-    var cities = [[String: String]]()
+    var cities = [[String: Any]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         resultsViewController = GMSAutocompleteResultsViewController()
+        let filter = GMSAutocompleteFilter()
+        filter.type = .city
+        filter.country = "US"
+        resultsViewController?.autocompleteFilter = filter
         resultsViewController?.delegate = self
-        
+    
         searchController = UISearchController(searchResultsController: resultsViewController)
         searchController?.searchResultsUpdater = resultsViewController
         
-        let subView = UIView(frame: CGRect(x: 0, y: 65.0, width: 350.0, height: 45.0))
         
+        let subView = UIView(frame: CGRect(x: 0, y: 65.0, width: 350.0, height: 45.0))
+
         subView.addSubview((searchController?.searchBar)!)
         view.addSubview(subView)
         searchController?.searchBar.sizeToFit()
         searchController?.hidesNavigationBarDuringPresentation = false
-        
-        // When UISearchController presents the results view, present it in
-        // this view controller, not one further up the chain.
-        definesPresentationContext = true
     }
     
     @IBAction func addCity(_ sender: UIButton) {
@@ -70,9 +73,8 @@ extension AddCityViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var cell:UITableViewCell = citiesTable.dequeueReusableCell(withIdentifier: "CityCell") as! UITableViewCell
-        cell.textLabel?.text = "Los Angeles"
-        
+        let cell:UITableViewCell = citiesTable.dequeueReusableCell(withIdentifier: "cityCell", for: indexPath)
+        cell.textLabel?.text = cities[indexPath.row]["city"] as? String
         return cell
     }
 }
@@ -83,10 +85,28 @@ extension AddCityViewController: GMSAutocompleteResultsViewControllerDelegate {
                            didAutocompleteWith place: GMSPlace) {
         searchController?.isActive = false
         // Do something with the selected place.
-        print("Place : \(place)")
         print("Place name: \(place.name)")
-        print("Place address: \(place.formattedAddress)")
-        print("Place attributions: \(place.attributions)")
+        let lat = place.coordinate.latitude
+        let long = place.coordinate.longitude
+        print("Place lat: \(lat)")
+        print("Place long: \(long)")
+        
+        cities.append(["city": place.name, "lat": lat, "long":long])
+        let context = managedObjectContext()
+        
+        let location = Location(context: context)
+        location.setValue(place.name, forKey: "city")
+        location.setValue(Double(lat), forKey: "latitude")
+        location.setValue(Double(long), forKey: "longitude")
+        
+        do {
+            try context.save()
+        } catch  {
+            fatalError("Failure to save context: \(error)")
+        }
+        
+        self.citiesTable.reloadData()
+        
     }
     
     func resultsController(_ resultsController: GMSAutocompleteResultsViewController,
@@ -102,5 +122,14 @@ extension AddCityViewController: GMSAutocompleteResultsViewControllerDelegate {
     
     func didUpdateAutocompletePredictions(forResultsController resultsController: GMSAutocompleteResultsViewController) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+}
+
+extension AddCityViewController {
+    
+    func managedObjectContext() -> NSManagedObjectContext {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let context = delegate.persistentContainer.viewContext
+        return context
     }
 }

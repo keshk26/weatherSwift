@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6B8E8F461F8B01BF00AE090C /* AddCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8E8F451F8B01BF00AE090C /* AddCityViewController.swift */; };
-		6B8E8F481F9416FB00AE090C /* AutoCompleteTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8E8F471F9416FA00AE090C /* AutoCompleteTextField.swift */; };
 		6BA2FF611EED5E1800A20A66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA2FF601EED5E1800A20A66 /* AppDelegate.swift */; };
 		6BA2FF631EED5E1800A20A66 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA2FF621EED5E1800A20A66 /* ViewController.swift */; };
 		6BA2FF661EED5E1800A20A66 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BA2FF641EED5E1800A20A66 /* Main.storyboard */; };
@@ -24,7 +23,6 @@
 /* Begin PBXFileReference section */
 		2E1696DF3057056E29962F00 /* Pods-WeatherSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherSwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherSwift/Pods-WeatherSwift.debug.xcconfig"; sourceTree = "<group>"; };
 		6B8E8F451F8B01BF00AE090C /* AddCityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityViewController.swift; sourceTree = "<group>"; };
-		6B8E8F471F9416FA00AE090C /* AutoCompleteTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCompleteTextField.swift; sourceTree = "<group>"; };
 		6BA2FF5D1EED5E1800A20A66 /* WeatherSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BA2FF601EED5E1800A20A66 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6BA2FF621EED5E1800A20A66 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -88,7 +86,6 @@
 				6BC9453E1F4A7998008747D3 /* SevenDayCell.swift */,
 				6BC945381F4A35C7008747D3 /* Forecast.swift */,
 				6BA2FF641EED5E1800A20A66 /* Main.storyboard */,
-				6B8E8F471F9416FA00AE090C /* AutoCompleteTextField.swift */,
 				6BA2FF6A1EED5E1800A20A66 /* Assets.xcassets */,
 				6BA2FF6C1EED5E1800A20A66 /* LaunchScreen.storyboard */,
 				6BA2FF6F1EED5E1800A20A66 /* Info.plist */,
@@ -236,7 +233,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6BC945391F4A35C7008747D3 /* Forecast.swift in Sources */,
-				6B8E8F481F9416FB00AE090C /* AutoCompleteTextField.swift in Sources */,
 				6B8E8F461F8B01BF00AE090C /* AddCityViewController.swift in Sources */,
 				6BA2FF691EED5E1800A20A66 /* WeatherSwift.xcdatamodeld in Sources */,
 				6BA2FF631EED5E1800A20A66 /* ViewController.swift in Sources */,

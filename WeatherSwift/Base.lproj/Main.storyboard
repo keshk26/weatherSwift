@@ -140,15 +140,38 @@
                                     <navigationItem title="Add Cities" id="Pbr-UQ-XnR"/>
                                 </items>
                             </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TTs-v9-2Y2">
+                                <rect key="frame" x="0.0" y="109" width="375" height="558"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cityCell" id="lkY-aK-Cc5">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lkY-aK-Cc5" id="7XH-ge-dGO">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="p9j-Jj-Vvd" id="cEr-LT-rXk"/>
+                                    <outlet property="delegate" destination="p9j-Jj-Vvd" id="Lf0-c1-3uf"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="eC3-CO-nXg" firstAttribute="top" secondItem="rVb-Em-z6F" secondAttribute="bottom" id="0b5-N7-EJk"/>
+                            <constraint firstItem="TTs-v9-2Y2" firstAttribute="top" secondItem="eC3-CO-nXg" secondAttribute="bottom" constant="45" id="7P7-yp-994"/>
+                            <constraint firstItem="TTs-v9-2Y2" firstAttribute="leading" secondItem="BdS-LI-NP8" secondAttribute="leading" id="8VP-af-MNM"/>
                             <constraint firstAttribute="trailing" secondItem="eC3-CO-nXg" secondAttribute="trailing" id="KRK-WA-1qg"/>
                             <constraint firstItem="eC3-CO-nXg" firstAttribute="leading" secondItem="BdS-LI-NP8" secondAttribute="leading" id="Ofs-DZ-aYu"/>
+                            <constraint firstItem="r9h-wd-KLd" firstAttribute="top" secondItem="TTs-v9-2Y2" secondAttribute="bottom" id="qtL-NK-fVW"/>
+                            <constraint firstAttribute="trailing" secondItem="TTs-v9-2Y2" secondAttribute="trailing" id="zFx-kB-GdL"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="citiesTable" destination="TTs-v9-2Y2" id="Itt-Z4-xE4"/>
                         <outlet property="searchDisplayController" destination="KTg-ch-qgP" id="hhh-vF-gLv"/>
                     </connections>
                 </viewController>
