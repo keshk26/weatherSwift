@@ -9,9 +9,6 @@
 import UIKit
 import CoreLocation
 
-let kAPI_KEY:String = "7e16895662d3dc898860576f62722a97"
-
-
 class ViewController: UIViewController, CLLocationManagerDelegate {
 
     @IBOutlet var summaryLabel: UILabel! {
@@ -32,12 +29,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    
     @IBOutlet var sevenDayTable: UITableView! {
         didSet {
             sevenDayTable.isHidden = true
         }
     }
     var sevenDayData = [[String: String]]()
+    var selectedLocation : CLLocation?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +55,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        if let selectedLocation = selectedLocation {
+            activityIndicator.startAnimating()
+            getCurrentTemperature(location: selectedLocation)
+        }
     }
     
     func getCurrentTemperature(location: CLLocation) {
@@ -67,7 +71,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 if let sevenData = tempDict["sevenDays"] as? [[String:String]] {
                     self.sevenDayData = sevenData
                 }
-
                 self.sevenDayTable.isHidden = false
                 self.sevenDayTable.reloadData()
             }
@@ -78,6 +81,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let addCityVC:AddCityViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddCityViewController") as! AddCityViewController
 
         self.present(addCityVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func getWeatherAtLocale(_ sender: Any) {
+        locationManager?.delegate = self
+        self.locationManager?.startUpdatingLocation()
     }
 }
 
@@ -112,7 +120,7 @@ extension ViewController {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationManager?.stopUpdatingLocation()
         locationManager?.delegate = nil
-        print(locations[0])
+        print(locations)
         getCurrentTemperature(location: locations[0])
     }
 }

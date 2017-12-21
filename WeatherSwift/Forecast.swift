@@ -9,6 +9,8 @@
 import Foundation
 import CoreLocation
 
+let kAPI_KEY:String = "7e16895662d3dc898860576f62722a97"
+
 class Forecast: NSObject, CLLocationManagerDelegate {
 
     static let sharedInstance = Forecast()
