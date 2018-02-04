@@ -17,6 +17,9 @@ class AddCityViewController: UIViewController {
     var resultsViewController: GMSAutocompleteResultsViewController?
     var searchController: UISearchController?
     
+    @IBAction func dismissVC(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     @IBOutlet var citiesTable: UITableView! {
         didSet {
             citiesTable.isHidden = false

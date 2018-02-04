@@ -138,8 +138,15 @@
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eC3-CO-nXg">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <items>
-                                    <navigationItem title="Add or Select City" id="Pbr-UQ-XnR"/>
+                                    <navigationItem title="Add or Select City" id="Pbr-UQ-XnR">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="MRh-jH-KPq">
+                                            <connections>
+                                                <action selector="dismissVC:" destination="p9j-Jj-Vvd" id="RE9-Ix-2It"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" contentInsetAdjustmentBehavior="never" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TTs-v9-2Y2">
