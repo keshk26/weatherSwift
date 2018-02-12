@@ -15,7 +15,7 @@ class Forecast: NSObject, CLLocationManagerDelegate {
 
     static let sharedInstance = Forecast()
     
-    func getTemperateForLocation(_ newLocation: CLLocation, completion: @escaping ([String:Any])->Void) {
+    func getTemperateForLocation(_ newLocation: CLLocation, completion: @escaping (Temperature)->Void) {
         
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(newLocation) { [unowned self] (placemarks, error) in
@@ -28,50 +28,13 @@ class Forecast: NSObject, CLLocationManagerDelegate {
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: request, completionHandler: { (data, response, error) in
                 
-                    guard let data = data else { return }
-                    let parsedData = JSON(data: data)
-                    var tempData = self.processTempData(jsonDict: parsedData)
-                    tempData["city"] = placemark.locality
+                guard let data = data else { return }
+                let parsedData = JSON(data: data)
+                let tempData = Temperature(json: parsedData, city: placemark.locality!)
                     completion(tempData)
             })
             task.resume()
         }
-    }
-    
-    func processTempData(jsonDict: JSON) -> [String:Any] {
-        
-        var tempData = [String: Any]()
-        // Current temp
-
-        let currentDict = jsonDict["currently"]
-        if let currentTemp = currentDict["apparentTemperature"].double {
-            tempData["temp"] = String(format: "%.0f°F", currentTemp)
-        } else {
-            tempData["temp"] = "Unavailable"
-        }
-        
-        if let currentSummary = currentDict["summary"].string {
-            tempData["summary"] = currentSummary
-        } else {
-            tempData["summary"] = "Unavailable"
-        }
-        
-        // 7-day forecast
-        guard let sevenDayData = jsonDict["daily"]["data"].array else {
-            return tempData
-        }
-        var sevenDay = [[String:Any]]()
-
-        for forecastDict in sevenDayData {
-            var dict = [String: Any]()
-            dict["weekday"] = weekDayFormat(time: forecastDict["time"].doubleValue)
-            dict["minTemp"] = String(format: "%.0f°", forecastDict["apparentTemperatureMin"].doubleValue)
-            dict["maxTemp"] = String(format: "%.0f°", forecastDict["apparentTemperatureMax"].doubleValue)
-            sevenDay.append(dict)
-        }
-        
-        tempData["sevenDays"] = sevenDay
-        return tempData
     }
 }
 

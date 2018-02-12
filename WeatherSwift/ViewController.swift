@@ -35,7 +35,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             sevenDayTable.isHidden = true
         }
     }
-    var sevenDayData = [[String: String]]()
+    var sevenDayData : [Weekday]?
     var selectedLocation : CLLocation?
 
     
@@ -62,15 +62,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func getCurrentTemperature(location: CLLocation) {
-        Forecast.sharedInstance.getTemperateForLocation(location) { [unowned self] (tempDict) in
+        Forecast.sharedInstance.getTemperateForLocation(location) { [unowned self] (temperature) in
             DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
-                self.title = tempDict["city"] as? String
-                self.tempLabel?.text = tempDict["temp"] as? String
-                self.summaryLabel?.text = tempDict["summary"] as? String
-                if let sevenData = tempDict["sevenDays"] as? [[String:String]] {
-                    self.sevenDayData = sevenData
-                }
+                self.title = temperature.location
+                self.tempLabel?.text = temperature.currentTemp
+                self.summaryLabel?.text = temperature.summary
+                self.sevenDayData = temperature.sevenDay
                 self.sevenDayTable.isHidden = false
                 self.sevenDayTable.reloadData()
             }
@@ -95,7 +93,7 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.sevenDayData.count
+        return self.sevenDayData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -106,9 +104,9 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
     
         let cell = tableView.dequeueReusableCell(withIdentifier: "SevenDayCell", for: indexPath) as! SevenDayCell
         
-        cell.weekdayLabel.text = sevenDayData[indexPath.row]["weekday"]
-        cell.minTempLabel.text = sevenDayData[indexPath.row]["minTemp"]
-        cell.maxTempLabel.text = sevenDayData[indexPath.row]["maxTemp"]
+        cell.weekdayLabel.text = sevenDayData?[indexPath.row].weekday
+        cell.minTempLabel.text = sevenDayData?[indexPath.row].minTemp
+        cell.maxTempLabel.text = sevenDayData?[indexPath.row].maxTemp
         
         return cell
     }
@@ -120,7 +118,6 @@ extension ViewController {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationManager?.stopUpdatingLocation()
         locationManager?.delegate = nil
-        print(locations)
         getCurrentTemperature(location: locations[0])
     }
 }
