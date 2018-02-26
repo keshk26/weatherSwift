@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController {
 
     @IBOutlet var summaryLabel: UILabel! {
         didSet {
@@ -22,13 +22,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    var locationManager : CLLocationManager?
+    var forecast : Forecast?
     @IBOutlet var activityIndicator : UIActivityIndicatorView! {
         didSet {
             activityIndicator.hidesWhenStopped = true
         }
     }
-    
     
     @IBOutlet var sevenDayTable: UITableView! {
         didSet {
@@ -42,11 +41,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        locationManager = CLLocationManager()
-        locationManager?.delegate = self
-        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager?.requestWhenInUseAuthorization()
-        locationManager?.startUpdatingLocation()
+        NotificationCenter.default.addObserver(self, selector: #selector(updateForcast(notfication:)), name:Notification.Name("DID_UPDATE_LOCATION"), object: nil)
         
         activityIndicator.color = .darkGray
         activityIndicator.startAnimating()
@@ -55,14 +50,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+    
         if let selectedLocation = selectedLocation {
             activityIndicator.startAnimating()
             getCurrentTemperature(location: selectedLocation)
+        } else {
+            // Initalize Forecast class to get current location
+            forecast = Forecast()
         }
     }
     
     func getCurrentTemperature(location: CLLocation) {
-        Forecast.sharedInstance.getTemperateForLocation(location) { [unowned self] (temperature) in
+        forecast?.getTemperateForLocation(location) { [unowned self] (temperature) in
             DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
                 self.title = temperature.location
@@ -75,6 +74,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    func updateForcast(notfication: NSNotification) {
+        guard let userInfo = notfication.userInfo as? Dictionary<String, CLLocation>, let updatedLocation = userInfo["location"] else {
+            return
+        }
+        getCurrentTemperature(location: updatedLocation)
+    }
+    
     @IBAction func showSavedCities() {
         let addCityVC:AddCityViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddCityViewController") as! AddCityViewController
 
@@ -82,8 +88,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func getWeatherAtLocale(_ sender: Any) {
-        locationManager?.delegate = self
-        self.locationManager?.startUpdatingLocation()
+        // Reinitalize forecast class to update to current location
+        forecast = Forecast()
     }
 }
 
@@ -109,16 +115,6 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         cell.maxTempLabel.text = sevenDayData?[indexPath.row].maxTemp
         
         return cell
-    }
-}
-
-
-extension ViewController {
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        locationManager?.stopUpdatingLocation()
-        locationManager?.delegate = nil
-        getCurrentTemperature(location: locations[0])
     }
 }
 
