@@ -91,6 +91,10 @@ class ViewController: UIViewController {
         // Reinitalize forecast class to update to current location
         forecast = Forecast()
     }
+    
+    deinit {
+      NotificationCenter.default.removeObserver(self, name: Notification.Name("DID_UPDATE_LOCATION"), object: nil)
+    }
 }
 
 extension ViewController : UITableViewDelegate, UITableViewDataSource {
