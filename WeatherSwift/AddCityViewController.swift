@@ -62,16 +62,18 @@ class AddCityViewController: UIViewController {
 extension AddCityViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 45.0
+        return 55.0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
+
         searchController = UISearchController(searchResultsController: resultsViewController)
         searchController?.searchResultsUpdater = resultsViewController
         
-        let subView = UIView(frame: CGRect(x: 0, y: 65.0, width: 350.0, height: 45.0))
-        subView.addSubview((searchController?.searchBar)!)
+        guard let searchBar = searchController?.searchBar else { return UIView() }
+        let subView = UIView(frame: CGRect(x: 0, y: 65.0, width: searchBar.frame.width, height: searchBar.frame.height))
+        subView.addSubview(searchBar)
+        
         searchController?.searchBar.sizeToFit()
         searchController?.hidesNavigationBarDuringPresentation = false
         return subView
@@ -101,8 +103,6 @@ extension AddCityViewController : UITableViewDelegate, UITableViewDataSource {
             return
         }
         let location = CLLocation.init(latitude: lat, longitude: long)
-        guard let navController = presentingViewController else { return }
-        print(navController)
         if let presenting = presentingViewController?.childViewControllers[0] as? ViewController {
             presenting.selectedLocation = location
         }

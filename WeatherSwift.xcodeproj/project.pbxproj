@@ -66,6 +66,25 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		6B93811E204393A10030ED49 /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				6BF6562F1FEB7F7100D6E8B1 /* CityCell.swift */,
+				6BC9453E1F4A7998008747D3 /* SevenDayCell.swift */,
+			);
+			path = cells;
+			sourceTree = "<group>";
+		};
+		6B93811F204393C60030ED49 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				6B93811A2031300C0030ED49 /* HelperExtenstions.swift */,
+				6B93811C20313B4D0030ED49 /* Weekday.swift */,
+				6B938118203112360030ED49 /* Temperature.swift */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
 		6BA2FF541EED5E1800A20A66 = {
 			isa = PBXGroup;
 			children = (
@@ -91,12 +110,9 @@
 				6BA2FF601EED5E1800A20A66 /* AppDelegate.swift */,
 				6BA2FF621EED5E1800A20A66 /* ViewController.swift */,
 				6B8E8F451F8B01BF00AE090C /* AddCityViewController.swift */,
-				6BC9453E1F4A7998008747D3 /* SevenDayCell.swift */,
-				6BF6562F1FEB7F7100D6E8B1 /* CityCell.swift */,
 				6BC945381F4A35C7008747D3 /* Forecast.swift */,
-				6B938118203112360030ED49 /* Temperature.swift */,
-				6B93811C20313B4D0030ED49 /* Weekday.swift */,
-				6B93811A2031300C0030ED49 /* HelperExtenstions.swift */,
+				6B93811E204393A10030ED49 /* cells */,
+				6B93811F204393C60030ED49 /* models */,
 				6BA2FF641EED5E1800A20A66 /* Main.storyboard */,
 				6BA2FF6A1EED5E1800A20A66 /* Assets.xcassets */,
 				6BA2FF6C1EED5E1800A20A66 /* LaunchScreen.storyboard */,
