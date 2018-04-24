@@ -106,7 +106,10 @@ extension AddCityViewController : UITableViewDelegate, UITableViewDataSource {
         if let presenting = presentingViewController?.childViewControllers[0] as? ViewController {
             presenting.selectedLocation = location
         }
-        self.dismiss(animated: true, completion: nil)
+        
+        DispatchQueue.main.async {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 }
 
